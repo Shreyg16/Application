@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react';
+import { ModeToggle } from './ModeToggle';
 
 type DropdownItem = {
   label: string;
@@ -67,11 +68,11 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-black shadow-md sticky top-0 z-50">
+    <nav className="bg-background shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <a href="#" className="text-2xl font-bold uppercase text-slate-200">Namely</a>
+            <a href="#" className="text-2xl font-bold uppercase">Namely</a>
           </div>
 
           {/* Desktop Menu */}
@@ -80,18 +81,18 @@ const Navbar: React.FC = () => {
               <div key={section.name} className="relative">
                 <button
                   onClick={() => toggleDropdown(section.name)}
-                  className="text-slate-300 uppercase hover:text-white text-sm "
+                  className=" uppercase  text-sm "
                 >
                   {section.name}
                 </button>
 
                 {activeDropdown === section.name && (
-                  <div className="absolute mt-2 bg-black shadow-lg rounded-md w-40 py-2">
+                  <div className="absolute mt-2 bg-background shadow-lg rounded-md w-40 py-2">
                     {section.dropdownItems.map((item) => (
                       <a
                         key={item.label}
                         href={item.href}
-                        className="block px-4 py-2 text-sm text-slate-200 hover:text-gray-400"
+                        className="block px-4 py-2 text-sm  hover:text-gray-400"
                       >
                         {item.label}
                       </a>
@@ -101,25 +102,26 @@ const Navbar: React.FC = () => {
               </div>
             ))}
 
-            <button className="text-slate-300 hover:text-white text-sm uppercase">Login</button>
+            <button className="text-sm uppercase">Login</button>
             <div className="relative">
               <input
                 type="text"
                 placeholder="Search"
-                className="border rounded-md text-center text-white px-3 py-2 w-44 ml-20 bg-transparent focus:outline-none focus:ring-2 focus:ring-slate-400"
+                className="border rounded-md text-center  px-3 py-2 w-44 ml-20 bg-transparent focus:outline-none focus:ring-2 "
               />
             </div>
 
-            <button className="bg-transparent border border-slate-400 uppercase text-slate-300 px-4 py-2 w-52 rounded-md">
+            <button className="bg-transparent border border-slate-400 uppercase  px-4 py-2 w-52 rounded-md">
               Request a Call
             </button>
           </div>
+            <ModeToggle/>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={toggleMobileMenu}
-              className="text-slate-200 focus:outline-none"
+              className="focus:outline-none -ml-12"
             >
               <svg
                 className="w-6 h-6"
@@ -142,23 +144,23 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-black shadow-lg py-2">
+        <div className="md:hidden bg-background shadow-lg py-2">
           {navbarSections.map((section) => (
             <div key={section.name} className="relative px-4 py-2">
               <button
                 onClick={() => toggleDropdown(section.name)}
-                className="w-full text-left text-slate-200 uppercase hover:text-white font-medium"
+                className="w-full text-left  uppercase  font-medium"
               >
                 {section.name}
               </button>
 
               {activeDropdown === section.name && (
-                <div className="mt-2 bg-black  rounded-md">
+                <div className="mt-2 bg-background  rounded-md">
                   {section.dropdownItems.map((item) => (
                     <a
                       key={item.label}
                       href={item.href}
-                      className="block px-4 py-2 text-sm text-slate-200 hover:bg-gray-100"
+                      className="block px-4 py-2 text-sm"
                     >
                       {item.label}
                     </a>
@@ -168,24 +170,21 @@ const Navbar: React.FC = () => {
             </div>
           ))}
           <div className="px-4 py-2">
-            <button className="text-slate-200 uppercase hover:text-white font-medium w-full text-left">
+            <button className=" uppercase  font-medium w-full text-left">
               Login
             </button>
           </div>
 
-          <div className="px-4 py-2">
             <input
               type="text"
               placeholder="Search..."
-              className="border w-full rounded-md px-3 py-2 bg-transparent focus:outline-none focus:ring-2 focus:ring-slate-400"
+              className="border w-full rounded-md px-3 py-2 bg-transparent focus:outline-none focus:ring-2 "
             />
-          </div>
           
-          <div className="px-4 py-2">
-            <button className="bg-transparent  border border-slate-400 uppercase text-slate-300 w-full py-2 rounded-md ">
+            <button className="bg-transparent  border border-slate-400 uppercase  w-full py-2 rounded-md ">
               Request a Call
             </button>
-          </div>
+          
         </div>
       )}
     </nav>
