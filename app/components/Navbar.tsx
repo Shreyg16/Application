@@ -1,6 +1,8 @@
 "use client"
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { ModeToggle } from './ModeToggle';
+import { Menu, X, ChevronDown, ChevronUp, Search } from 'lucide-react';
 
 type DropdownItem = {
   label: string;
@@ -30,7 +32,7 @@ const navbarSections: NavbarSection[] = [
       { label: 'WHY SWITCH', href: '#' },
       { label: 'GET PRICING', href: '#' },
       { label: 'CLIENT SERVICES', href: '#' },
-      { label: 'INDRUSTRY SOLUTIONS', href: '#' },
+      { label: 'INDUSTRY SOLUTIONS', href: '#' },
       { label: 'CASE STUDIES', href: '#' },
       { label: 'PARTNERS', href: '#' },
     ],
@@ -50,7 +52,6 @@ const navbarSections: NavbarSection[] = [
     dropdownItems: [
       { label: 'PRESS', href: '#' },
       { label: 'CAREERS', href: '#' },
-     
     ],
   },
 ];
@@ -58,6 +59,16 @@ const navbarSections: NavbarSection[] = [
 const Navbar: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleDropdown = (name: string) => {
     setActiveDropdown(activeDropdown === name ? null : name);
@@ -68,127 +79,116 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-background shadow-md sticky top-0 z-50">
+    <nav className={`bg-background shadow-md sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center">
           <div className="flex items-center">
             <a href="#" className="text-2xl font-bold uppercase">Namely</a>
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
             {navbarSections.map((section) => (
-              <div key={section.name} className="relative">
+              <div key={section.name} className="relative group">
                 <button
                   onClick={() => toggleDropdown(section.name)}
-                  className=" uppercase  text-sm "
+                  className="uppercase text-[13px] flex items-center"
                 >
                   {section.name}
+                  {activeDropdown === section.name ? <ChevronUp className="ml-1 w-4 h-4" /> : <ChevronDown className="ml-1 w-4 h-4" />}
                 </button>
 
-                {activeDropdown === section.name && (
-                  <div className="absolute mt-2 bg-background shadow-lg rounded-md w-40 py-2">
-                    {section.dropdownItems.map((item) => (
-                      <a
-                        key={item.label}
-                        href={item.href}
-                        className="block px-4 py-2 text-sm  hover:text-gray-400"
-                      >
-                        {item.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-
-            <button className="text-sm uppercase">Login</button>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search"
-                className="border rounded-md text-center  px-3 py-2 w-44 ml-20 bg-transparent focus:outline-none focus:ring-2 "
-              />
-            </div>
-
-            <button className="bg-transparent border border-slate-400 uppercase  px-4 py-2 w-52 rounded-md">
-              Request a Call
-            </button>
-          </div>
-            <ModeToggle/>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={toggleMobileMenu}
-              className="focus:outline-none -ml-12"
-            >
-              <svg
-                className="w-6 h-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d={mobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-background shadow-lg py-2">
-          {navbarSections.map((section) => (
-            <div key={section.name} className="relative px-4 py-2">
-              <button
-                onClick={() => toggleDropdown(section.name)}
-                className="w-full text-left  uppercase  font-medium"
-              >
-                {section.name}
-              </button>
-
-              {activeDropdown === section.name && (
-                <div className="mt-2 bg-background  rounded-md">
+                <div className="absolute left-0 mt-2 bg-background shadow-lg rounded-md w-48 py-2 hidden group-hover:block">
                   {section.dropdownItems.map((item) => (
                     <a
                       key={item.label}
                       href={item.href}
-                      className="block px-4 py-2 text-sm"
+                      className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
                     >
                       {item.label}
                     </a>
                   ))}
                 </div>
-              )}
+              </div>
+            ))}
+
+            <button className="text-[13px] uppercase">Login</button>
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search"
+                className="border rounded-md text-center px-3 py-2 w-44 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             </div>
-          ))}
-          <div className="px-4 py-2">
-            <button className=" uppercase  font-medium w-full text-left">
-              Login
+
+            <button className="bg-transparent border border-primary uppercase px-4 py-2 w-52 rounded-md hover:bg-primary hover:text-primary-foreground transition-colors duration-300">
+              Request a Call
             </button>
           </div>
 
+          <div className="flex items-center space-x-4">
+            <ModeToggle />
+
+            {/* Mobile Menu Button */}
+            <div className="lg:hidden">
+              <button
+                onClick={toggleMobileMenu}
+                className="focus:outline-none"
+                aria-label="Toggle mobile menu"
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div className={`lg:hidden bg-background shadow-lg overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-screen' : 'max-h-0'}`}>
+        <div className="px-4 py-2 space-y-4">
+          {navbarSections.map((section) => (
+            <div key={section.name} className="relative">
+              <button
+                onClick={() => toggleDropdown(section.name)}
+                className="w-full text-left uppercase font-medium flex justify-between items-center"
+              >
+                {section.name}
+                {activeDropdown === section.name ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </button>
+
+              <div className={`mt-2 bg-background rounded-md overflow-hidden transition-all duration-300 ease-in-out ${activeDropdown === section.name ? 'max-h-screen' : 'max-h-0'}`}>
+                {section.dropdownItems.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+          <button className="uppercase font-medium w-full text-left py-2">
+            Login
+          </button>
+          <div className="relative">
             <input
               type="text"
               placeholder="Search..."
-              className="border w-full rounded-md px-3 py-2 bg-transparent focus:outline-none focus:ring-2 "
+              className="border w-full rounded-md px-3 py-2 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary"
             />
-          
-            <button className="bg-transparent  border border-slate-400 uppercase  w-full py-2 rounded-md ">
-              Request a Call
-            </button>
-          
+            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+          </div>
+          <button className="bg-transparent border border-primary uppercase w-full py-2 rounded-md hover:bg-primary hover:text-primary-foreground transition-colors duration-300">
+            Request a Call
+          </button>
         </div>
-      )}
+      </div>
     </nav>
   );
 };
 
 export default Navbar;
+
