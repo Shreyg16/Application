@@ -18,40 +18,40 @@ const navbarSections: NavbarSection[] = [
   {
     name: 'Solutions',
     dropdownItems: [
-      { label: 'HR', href: '#' },
-      { label: 'Payroll', href: '#' },
-      { label: 'Onboarding', href: '#' },
-      { label: 'Time', href: '#' },
-      { label: 'Reporting', href: '#' },
-      { label: 'Mobile App', href: '#' },
+      { label: 'HR', href: '/' },
+      { label: 'Payroll', href: '/' },
+      { label: 'Onboarding', href: '/' },
+      { label: 'Time', href: '/' },
+      { label: 'Reporting', href: '/' },
+      { label: 'Mobile App', href: '/' },
     ],
   },
   {
     name: 'Why Namely',
     dropdownItems: [
-      { label: 'WHY SWITCH', href: '#' },
-      { label: 'GET PRICING', href: '#' },
-      { label: 'CLIENT SERVICES', href: '#' },
-      { label: 'INDUSTRY SOLUTIONS', href: '#' },
-      { label: 'CASE STUDIES', href: '#' },
-      { label: 'PARTNERS', href: '#' },
+      { label: 'WHY SWITCH', href: '/' },
+      { label: 'GET PRICING', href: '/' },
+      { label: 'CLIENT SERVICES', href: '/' },
+      { label: 'INDUSTRY SOLUTIONS', href: '/' },
+      { label: 'CASE STUDIES', href: '/' },
+      { label: 'PARTNERS', href: '/' },
     ],
   },
   {
     name: 'Resources',
     dropdownItems: [
-      { label: 'BLOG', href: '#' },
-      { label: 'LIBRARY', href: '#' },
-      { label: 'EVENTS', href: '#' },
-      { label: 'DEVELOPERS', href: '#' },
-      { label: 'CLIENT CARE', href: '#' },
+      { label: 'BLOG', href: '/' },
+      { label: 'LIBRARY', href: '/' },
+      { label: 'EVENTS', href: '/' },
+      { label: 'DEVELOPERS', href: '/' },
+      { label: 'CLIENT CARE', href: '/' },
     ],
   },
   {
     name: 'About',
     dropdownItems: [
-      { label: 'PRESS', href: '#' },
-      { label: 'CAREERS', href: '#' },
+      { label: 'PRESS', href: '/' },
+      { label: 'CAREERS', href: '/' },
     ],
   },
 ];
@@ -112,7 +112,7 @@ const Navbar: React.FC = () => {
               </div>
             ))}
 
-            <button className="text-[13px] uppercase">Login</button>
+            <button className="text-[13p/] uppercase">Login</button>
             <div className="relative">
               <input
                 type="text"
